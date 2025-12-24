@@ -10,7 +10,7 @@ import {
 } from "sinhala-unicode-coverter";
 import * as styles from "styles/components.css";
 
-type InsertMode = "unicode" | "dl_manel_legacy";
+type InsertMode = "dl_manel_legacy" | "unicode";
 
 export const App = () => {
   const intl = useIntl();
@@ -20,7 +20,7 @@ export const App = () => {
   );
 
   const [roman, setRoman] = useState("");
-  const [mode, setMode] = useState<InsertMode>("unicode");
+  const [mode, setMode] = useState<InsertMode>("dl_manel_legacy");
 
   // Optional: if user pastes legacy text and wants to convert back to Unicode
   const [legacyInput, setLegacyInput] = useState("");
@@ -53,18 +53,19 @@ export const App = () => {
 
   return (
     <div className={styles.scrollContainer}>
-      <Rows spacing="2u">
-        <Title>
-          {intl.formatMessage({
-            defaultMessage: "Sinhala Typing (Phonetic)",
-          })}
-        </Title>
+      <div>
+        <Rows spacing="2u">
+          <Title>
+            {intl.formatMessage({
+              defaultMessage: "Sinhala Typing (Phonetic)",
+            })}
+          </Title>
 
-        <Text>
-          <FormattedMessage
-            defaultMessage="Type Singlish. We convert it to Sinhala. Choose how to insert into Canva."
-          />
-        </Text>
+          <Text>
+            <FormattedMessage
+              defaultMessage="Type Singlish. We convert it to Sinhala. Choose how to insert into Canva."
+            />
+          </Text>
 
         <Rows spacing="1u">
           <Text>
@@ -76,43 +77,30 @@ export const App = () => {
             options={[
               {
                 label: intl.formatMessage({
-                  defaultMessage: "Unicode (recommended)",
+                  defaultMessage: "legacy (recommended)",
                 }),
-                value: "unicode",
+                
+                value: "dl_manel_legacy",
               },
               {
                 label: intl.formatMessage({
-                  defaultMessage: "DL-Manel legacy (font-locked)",
+                  defaultMessage: "Unicode ",
                 }),
-                value: "dl_manel_legacy",
+                value: "unicode",
               },
             ]}
           />
-          {mode === "dl_manel_legacy" ? (
-            <Text>
-              {intl.formatMessage({
-                defaultMessage:
-                  "Legacy text only works if you apply the DL-Manel font in Canva. Changing fonts will break it.",
-              })}
-            </Text>
-          ) : null}
+          
         </Rows>
 
         <Rows spacing="1u">
           <Text>{intl.formatMessage({ defaultMessage: "Singlish input" })}</Text>
           <textarea
+            className={styles.modernInput}
             value={roman}
             onChange={(e) => setRoman(e.currentTarget.value)}
-            rows={4}
+            rows={5}
             placeholder="shrii lankaawa..."
-            style={{
-              width: "100%",
-              boxSizing: "border-box",
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #d9d9d9",
-              fontSize: "14px",
-            }}
           />
         </Rows>
 
@@ -124,7 +112,7 @@ export const App = () => {
               defaultMessage: "Unicode output",
             })}
           </Text>
-          <div className={styles.legacyPreview}>
+          <div className={styles.modernPreview}>
             {legacyDlManel || "fmroiqk fuys Èiajkq we;'"}
           </div>
 
@@ -132,47 +120,31 @@ export const App = () => {
 
         </Rows>
 
+
+
         <Rows spacing="1u">
-          <Text>
-            {intl.formatMessage({
-              defaultMessage: "DL-Manel legacy output",
-            })}
-          </Text>
-          <textarea
-            value={legacyDlManel}
-            readOnly
-            rows={3}
-            style={{
-              width: "100%",
-              boxSizing: "border-box",
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #d9d9d9",
-              fontSize: "14px",
-            }}
-          />
+          <Button
+            variant="primary"
+            onClick={insertText}
+            disabled={!addElement || !(mode === "unicode" ? unicode.trim() : legacyDlManel.trim())}
+            stretch
+          >
+            {intl.formatMessage({ defaultMessage: "Insert into design" })}
+          </Button>
+
+          <Button
+            variant="secondary"
+            onClick={() => setRoman("")}
+            disabled={!roman}
+            stretch
+          >
+            {intl.formatMessage({ defaultMessage: "Clear" })}
+          </Button>
         </Rows>
-
-        <Button
-          variant="primary"
-          onClick={insertText}
-          disabled={!addElement || !(mode === "unicode" ? unicode.trim() : legacyDlManel.trim())}
-          stretch
-        >
-          {intl.formatMessage({ defaultMessage: "Insert into design" })}
-        </Button>
-
-        <Button
-          variant="secondary"
-          onClick={() => setRoman("")}
-          disabled={!roman}
-          stretch
-        >
-          {intl.formatMessage({ defaultMessage: "Clear" })}
-        </Button>
 
        
       </Rows>
+      </div>
     </div>
   );
 };
