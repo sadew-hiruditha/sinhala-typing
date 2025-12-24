@@ -54,3 +54,20 @@
   justify-content: center;
   width: calc(400px + 32px + 2px); /* Image width + padding + border */
 }
+@font-face {
+  font-family: "Sinhala";
+  src: url("../src/assets/fonts/sinhala.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.legacyPreview {
+  font-family: "sinhala", sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background-color: #2b2b2b;
+  color: #ffffff;
+}

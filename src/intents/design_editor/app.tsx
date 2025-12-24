@@ -117,24 +117,19 @@ export const App = () => {
         </Rows>
 
         <Rows spacing="1u">
+
+
           <Text>
             {intl.formatMessage({
               defaultMessage: "Unicode output",
             })}
           </Text>
-          <textarea
-            value={unicode}
-            readOnly
-            rows={3}
-            style={{
-              width: "100%",
-              boxSizing: "border-box",
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #d9d9d9",
-              fontSize: "14px",
-            }}
-          />
+          <div className={styles.legacyPreview}>
+            {legacyDlManel || "fmroiqk fuys Èiajkq we;'"}
+          </div>
+
+
+
         </Rows>
 
         <Rows spacing="1u">
@@ -176,46 +171,7 @@ export const App = () => {
           {intl.formatMessage({ defaultMessage: "Clear" })}
         </Button>
 
-        <Rows spacing="1u">
-          <Title>
-            {intl.formatMessage({ defaultMessage: "Legacy to Unicode (DL-Manel)" })}
-          </Title>
-          <Text>
-            {intl.formatMessage({
-              defaultMessage:
-                "If you already have DL-Manel legacy text, paste it here to convert back to Unicode.",
-            })}
-          </Text>
-
-          <textarea
-            value={legacyInput}
-            onChange={(e) => setLegacyInput(e.currentTarget.value)}
-            rows={2}
-            placeholder="Y%S ,xld"
-            style={{
-              width: "100%",
-              boxSizing: "border-box",
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #d9d9d9",
-              fontSize: "14px",
-            }}
-          />
-
-          <textarea
-            value={legacyToUnicode}
-            readOnly
-            rows={2}
-            style={{
-              width: "100%",
-              boxSizing: "border-box",
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #d9d9d9",
-              fontSize: "14px",
-            }}
-          />
-        </Rows>
+       
       </Rows>
     </div>
   );
